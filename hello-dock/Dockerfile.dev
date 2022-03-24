@@ -1,0 +1,26 @@
+FROM node:lts-alpine
+
+EXPOSE 3000
+
+USER node
+
+RUN mkdir -p /home/node/app
+
+WORKDIR /home/node/app
+
+COPY ./package.json .
+RUN npm install
+
+COPY . .
+
+CMD [ "npm", "run", "dev" ]
+
+# Run with:
+# docker container run \
+#     --rm \
+#     --detach \
+#     --publish 3000:3000 \
+#     --name hello-dock-dev \
+#     --volume $(pwd):/home/node/app \
+#     --volume /home/node/app/node_modules \
+#     hello-dock:dev
